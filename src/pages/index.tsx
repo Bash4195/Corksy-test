@@ -118,6 +118,10 @@ export default function Home() {
 
   function deletePaymentMethod(cardId: PaymentMethod["id"]) {
     setPaymentMethods(paymentMethods.filter((card) => card.id !== cardId))
+
+    if(primaryMethod === cardId) {
+      setPrimaryMethod(null)
+    }
   }
 
   useEffect(() => {
