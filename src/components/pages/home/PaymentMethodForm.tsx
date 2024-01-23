@@ -33,17 +33,18 @@ type Props = {
   submitPaymentMethod: (newCard: PaymentMethod, isPrimary: boolean) => void
   setOpen: (open: boolean) => void
   card?: PaymentMethod
+  isPrimaryCard?: boolean
 }
 
 // Handles the ADD and EDIT payment method forms
-export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card }: Props) {
+export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, isPrimaryCard = false }: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
     defaultValues: {
-      // isPrimary TODO
+      isPrimary: isPrimaryCard,
       cardNumber: card?.card.number,
       expirationDate: card?.card.expirationDate,
       cvv: card?.card.cvv,

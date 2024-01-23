@@ -111,7 +111,7 @@ export default function Home() {
     setSelectedEditCard(null)
 
     if(isPrimary) {
-      setPrimaryMethod(card.id)
+      updatePrimaryMethod(card.id)
     }
   }
 
@@ -195,7 +195,10 @@ export default function Home() {
         open={showAddPaymentModal}
         setOpen={setShowAddPaymentModal}
       >
-        <PaymentMethodForm submitPaymentMethod={addPaymentMethod} setOpen={setShowAddPaymentModal} />
+        <PaymentMethodForm
+          submitPaymentMethod={addPaymentMethod}
+          setOpen={setShowAddPaymentModal}
+        />
       </Modal>
 
       {selectedEditCard && (
@@ -205,7 +208,12 @@ export default function Home() {
           open={showEditPaymentModal}
           setOpen={setShowEditPaymentModal}
         >
-          <PaymentMethodForm submitPaymentMethod={updatePaymentMethod} setOpen={setShowEditPaymentModal} card={paymentMethods.filter((card) => card.id === selectedEditCard)[0]} />
+          <PaymentMethodForm
+            submitPaymentMethod={updatePaymentMethod}
+            setOpen={setShowEditPaymentModal}
+            card={paymentMethods.filter((card) => card.id === selectedEditCard)[0]}
+            isPrimaryCard={selectedEditCard === primaryMethod}
+          />
         </Modal>
       )}
 
