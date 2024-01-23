@@ -8,18 +8,20 @@ import { HiPencilAlt, HiTrash } from "react-icons/hi";
 
 type Props = {
   card: PaymentMethod
+  isPrimary: boolean
+  setPrimary?: () => void
   editCard?: () => void
   deleteCard?: () => void
 }
 
-export default function Card({ card, editCard, deleteCard }: Props) {
+export default function Card({ card, isPrimary, setPrimary, editCard, deleteCard }: Props) {
   const textColour = card.card.type === "Visa" ? 'text-white' : '' // Defaults to gray
   let bgColour = 'bg-gray-200'
   if(card.card.type === "Visa") bgColour = 'bg-[#1A1F71] ring-0'
   if(card.card.type === "Mastercard") bgColour = 'bg-[#F1EFEB]'
 
   return (
-    <div className={`w-full h-60 flex flex-col justify-between rounded-2xl ring-1 ring-inset ring-gray-300 p-8 ${textColour} ${bgColour}`}>
+    <div className={`w-full h-60 flex flex-col justify-between gap-4 rounded-2xl ring-1 ring-inset ring-gray-300 p-8 ${textColour} ${bgColour}`}>
       <div className="flex justify-between">
         <h3 className="text-xl font-bold">{card.billingAddress.firstName} {card.billingAddress.lastName}</h3>
 
@@ -48,11 +50,9 @@ export default function Card({ card, editCard, deleteCard }: Props) {
         )}
       </div>
 
-      <div>
+      <div className="flex justify-between items-center">
         <p className="font-semibold">**** {card.card.number.toString().slice(12, 16)}</p>
-      </div>
 
-      <div className="flex justify-between items-end">
         <div className="flex flex-col">
           <p className="font-semibold">Expiration Date</p>
           <p>
@@ -60,10 +60,32 @@ export default function Card({ card, editCard, deleteCard }: Props) {
             <span>20{card.card.expirationDate.toString().slice(2, 4)}</span>
           </p>
         </div>
+      </div>
 
-        <div className="max-w-20">
+      <div className="flex justify-between items-end h-8">
+        <div>
+          {isPrimary ? (
+            <p className="text-sm font-bold">
+              Primary method
+            </p>
+          ) : (
+            <>
+              {setPrimary && (
+                <button
+                  type="button"
+                  className="text-sm hover:underline"
+                  onClick={setPrimary}
+                >
+                  Set as primary
+                </button>
+              )}
+            </>
+          )}
+        </div>
+
+        <div className="h-full flex items-end">
           {card.card.type === "Visa" && (
-            <Image src={VisaLogo} alt="Visa logo" className="mb-2 mr-2" />
+            <Image src={VisaLogo} alt="Visa logo" className="h-full w-auto" />
           )}
 
           {card.card.type === "Mastercard" && (

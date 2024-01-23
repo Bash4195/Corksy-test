@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image"
 
 import PageHeader from "@/components/ui/PageHeader";
@@ -14,8 +14,7 @@ import type { PaymentMethod } from "@/PaymentMethod";
 import PaymentMethodForm from "@/components/pages/home/PaymentMethodForm";
 import Modal from "@/components/ui/Modal";
 
-// TODO: Remove this
-const tempPaymentMethods = [
+const samplePaymentMethods: PaymentMethod[] = [
   {
     id: "123",
     card: {
@@ -85,9 +84,9 @@ const tempPaymentMethods = [
 ]
 
 export default function Home() {
-  // const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(tempPaymentMethods)
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(samplePaymentMethods)
   const [primaryMethod, setPrimaryMethod] = useState<PaymentMethod["id"] | null>(null)
+
   const [showAddPaymentModal, setShowAddPaymentModal] = useState(false)
 
   const [showEditPaymentModal, setShowEditPaymentModal] = useState(false)
@@ -120,7 +119,20 @@ export default function Home() {
     setPaymentMethods(paymentMethods.filter((card) => card.id !== cardId))
   }
 
-  // TODO: If primary is not selected, set one by default
+  useEffect(() => {
+    if(paymentMethods.length > 0 && !primaryMethod) {
+      setPrimaryMethod(paymentMethods[0].id)
+    }
+  }, [paymentMethods])
+
+  function updatePrimaryMethod(cardId: PaymentMethod["id"]) {
+    setPrimaryMethod(cardId)
+
+    // Reorder payment methods so primary is always first
+    const primaryCard = paymentMethods.filter((card) => card.id === cardId)[0]
+
+    setPaymentMethods([primaryCard, ...paymentMethods.filter((card) => card.id !== cardId)])
+  }
 
   return (
     <div>
@@ -133,6 +145,8 @@ export default function Home() {
               <Card
                 key={card.id}
                 card={card}
+                isPrimary={card.id === primaryMethod}
+                setPrimary={() => updatePrimaryMethod(card.id)}
                 editCard={() => {
                   setSelectedEditCard(card.id)
                   setShowEditPaymentModal(true)
@@ -203,7 +217,7 @@ export default function Home() {
           setOpen={setShowDeletePaymentModal}
         >
           <>
-            <Card card={paymentMethods.filter((card) => card.id === selectedDeleteCard)[0]} />
+            <Card card={paymentMethods.filter((card) => card.id === selectedDeleteCard)[0]} isPrimary={selectedDeleteCard === primaryMethod} />
 
             <div className="flex flex-col gap-2 sm:flex-row-reverse pt-4 border-t border-gray-200 mt-4">
               <Button
