@@ -74,6 +74,7 @@ export default function AddPaymentMethodModal({ open, setOpen, addPaymentMethod 
   return (
     <Modal
       title="Add a payment method"
+      description="We accept debit and credit cards from VISA, Mastercard, AMEX and Discover."
       open={open}
       setOpen={setOpen}
     >
@@ -150,7 +151,7 @@ export default function AddPaymentMethodModal({ open, setOpen, addPaymentMethod 
             />
           </div>
 
-          <div className="mt-4">
+          <div className="mt-8">
             <h3 className="text-lg font-semibold mb-2">Billing address</h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-6 gap-2">
@@ -211,7 +212,7 @@ export default function AddPaymentMethodModal({ open, setOpen, addPaymentMethod 
               />
 
               <Input
-                label="Date of birth (mm/dd/yyyy)"
+                label="Date of birth (MM/DD/YYYY)"
                 type="text"
                 field={{
                   ...register('dateOfBirth', {
@@ -376,7 +377,7 @@ export default function AddPaymentMethodModal({ open, setOpen, addPaymentMethod 
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 sm:flex-row-reverse mt-4">
+          <div className="flex flex-col gap-2 sm:flex-row-reverse pt-4 border-t border-gray-200 mt-4">
             <Button
               type="submit"
               btnType="primary"

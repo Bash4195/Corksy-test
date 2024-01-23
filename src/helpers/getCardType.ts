@@ -21,25 +21,5 @@ export const getCardType = function(cardNumber: string): PaymentMethod["card"]["
   if(cardNumber.match(re) != null)
     return "Discover";
 
-  // Diners
-  re = new RegExp("^36");
-  if(cardNumber.match(re) != null)
-    return "Diners";
-
-  // Diners - Carte Blanche
-  re = new RegExp("^30[0-5]");
-  if(cardNumber.match(re) != null)
-    return "Diners - Carte Blanche";
-
-  // JCB
-  re = new RegExp("^35(2[89]|[3-8][0-9])");
-  if(cardNumber.match(re) != null)
-    return "JCB";
-
-  // Visa Electron
-  re = new RegExp("^(4026|417500|4508|4844|491(3|7))");
-  if(cardNumber.match(re) != null)
-    return "Visa Electron";
-
   return null;
 }

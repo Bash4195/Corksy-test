@@ -5,11 +5,12 @@ import { HiMiniXMark } from "react-icons/hi2";
 type Props = {
   children: JSX.Element
   title: string
+  description?: string
   showClose?: boolean
   open: boolean
   setOpen: (open: boolean) => void
 }
-export default function Modal({ children, title, showClose = true, open, setOpen }: Props) {
+export default function Modal({ children, title, description, showClose = true, open, setOpen }: Props) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -38,9 +39,15 @@ export default function Modal({ children, title, showClose = true, open, setOpen
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg p-4">
                 <div className="flex justify-between items-start gap-4 mb-4">
-                  <Dialog.Title as="h2" className="text-2xl font-bold">
-                    {title}
-                  </Dialog.Title>
+                  <div>
+                    <Dialog.Title as="h2" className="text-2xl font-bold mb-2">
+                      {title}
+                    </Dialog.Title>
+
+                    <Dialog.Description as="p">
+                      {description}
+                    </Dialog.Description>
+                  </div>
 
                   {showClose && (
                     <button
