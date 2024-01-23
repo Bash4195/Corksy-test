@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image"
+import Head from 'next/head'
 
 import PageHeader from "@/components/ui/PageHeader";
 import Button from "@/components/ui/Button";
@@ -136,6 +137,10 @@ export default function Home() {
 
   return (
     <div>
+      <Head>
+        <title>Corksy Test</title>
+      </Head>
+
       <PageHeader title="Payment Methods" />
 
       <div className="px-4 py-8">

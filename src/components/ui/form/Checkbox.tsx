@@ -29,7 +29,7 @@ export default function Checkbox({ label, field, errors, wrapperClass, ...props 
       </div>
 
       {errors[field.name] && (
-        <label className="block text-sm font-medium text-red-500" htmlFor={field.name}>
+        <label className="block text-sm font-medium text-red-600" htmlFor={field.name}>
           {/* @ts-ignore */}
           {errors[field.name].message}
         </label>

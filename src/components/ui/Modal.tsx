@@ -54,6 +54,7 @@ export default function Modal({ children, title, description, showClose = true, 
                       type="button"
                       className="rounded-full text-gray-900 p-1 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
                       onClick={() => setOpen(false)}
+                      aria-label="Close modal"
                     >
                       <HiMiniXMark size={24} />
                     </button>

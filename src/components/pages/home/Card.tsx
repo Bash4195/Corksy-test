@@ -32,6 +32,7 @@ export default function Card({ card, isPrimary, setPrimary, editCard, deleteCard
                 type="button"
                 className={`rounded-full p-1 focus:outline-none focus:ring-2 ${card.card.type === "Visa" ? 'focus:ring-white' : 'focus:ring-gray-900'}`}
                 onClick={editCard}
+                aria-label="Edit payment method"
               >
                 <HiPencilAlt size={24} />
               </button>
@@ -42,6 +43,7 @@ export default function Card({ card, isPrimary, setPrimary, editCard, deleteCard
                 type="button"
                 className={`rounded-full p-1 focus:outline-none focus:ring-2 ${card.card.type === "Visa" ? 'focus:ring-white' : 'focus:ring-gray-900'}`}
                 onClick={deleteCard}
+                aria-label="Delete payment method"
               >
                 <HiTrash size={24} />
               </button>

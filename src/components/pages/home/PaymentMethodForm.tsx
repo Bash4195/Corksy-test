@@ -104,7 +104,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
           label="Card Number"
           type="text"
           pattern="\d*"
-          maxlength={16}
+          maxLength={16}
           field={
             register('cardNumber', {
               required: "Card number is required.",
@@ -118,7 +118,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
           label="Expiration Date (MM/YY)"
           type="text"
           pattern="\d*"
-          maxlength={4}
+          maxLength={4}
           field={{
             ...register('expirationDate', {
               required: "Expiration date is required.",
@@ -131,7 +131,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
           label="CVV"
           type="text"
           pattern="\d*"
-          maxlength={4}
+          maxLength={4}
           field={{
             ...register('cvv', {
               required: "CVV number is required.",
@@ -197,7 +197,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
             label="Phone"
             type="text"
             pattern="\d*"
-            maxlength={10}
+            maxLength={10}
             field={{
               ...register('phone', {
                 required: "Phone number is required.",
@@ -215,7 +215,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
             label="Date of birth (MM/DD/YYYY)"
             type="text"
             pattern="\d*"
-            maxlength={8}
+            maxLength={8}
             field={{
               ...register('dateOfBirth', {
                 required: "Date of birth is required.",
@@ -344,7 +344,7 @@ export default function PaymentMethodForm({ submitPaymentMethod, setOpen, card, 
             label="Zip Code"
             type="text"
             pattern="\d*"
-            maxlength={5}
+            maxLength={5}
             field={{
               ...register('zipCode', {
                 required: "Zip Code is required.",
