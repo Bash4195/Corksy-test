@@ -1,6 +1,6 @@
 type Props = {
   children: JSX.Element | string
-  btnType?: 'primary'
+  btnType?: 'primary' | 'delete'
   className?: string
   // All other props
   [x:string]: any;
@@ -8,8 +8,11 @@ type Props = {
 export default function Button({ children, btnType, className, ...props }: Props) {
   const btnDefaultStyles = 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:outline-gray-900'
   const btnPrimaryStyles = 'bg-primary text-white hover:bg-primary-hover focus-visible:outline-primary'
+  const btnDeleteStyles = 'bg-red-500 text-white hover:bg-red-600 focus-visible:outline-red-500'
 
-  const btnStyles = btnType === 'primary' ? btnPrimaryStyles : btnDefaultStyles
+  let btnStyles = btnDefaultStyles
+  if(btnType === 'primary') btnStyles = btnPrimaryStyles
+  if(btnType === 'delete') btnStyles = btnDeleteStyles
 
   return (
     <button

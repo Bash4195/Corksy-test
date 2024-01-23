@@ -89,9 +89,12 @@ export default function Home() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(tempPaymentMethods)
   const [primaryMethod, setPrimaryMethod] = useState<PaymentMethod["id"] | null>(null)
   const [showAddPaymentModal, setShowAddPaymentModal] = useState(false)
-  const [showEditPaymentModal, setShowEditPaymentModal] = useState(false)
 
+  const [showEditPaymentModal, setShowEditPaymentModal] = useState(false)
   const [selectedEditCard, setSelectedEditCard] = useState<PaymentMethod["id"] | null>(null)
+
+  const [showDeletePaymentModal, setShowDeletePaymentModal] = useState(false)
+  const [selectedDeleteCard, setSelectedDeleteCard] = useState<PaymentMethod["id"] | null>(null)
 
   function addPaymentMethod(newCard: PaymentMethod, isPrimary: boolean) {
     setPaymentMethods([...paymentMethods, newCard])
@@ -106,9 +109,15 @@ export default function Home() {
     newPaymentMethods.push(card)
     setPaymentMethods(newPaymentMethods)
 
+    setSelectedEditCard(null)
+
     if(isPrimary) {
       setPrimaryMethod(card.id)
     }
+  }
+
+  function deletePaymentMethod(cardId: PaymentMethod["id"]) {
+    setPaymentMethods(paymentMethods.filter((card) => card.id !== cardId))
   }
 
   // TODO: If primary is not selected, set one by default
@@ -124,9 +133,13 @@ export default function Home() {
               <Card
                 key={card.id}
                 card={card}
-                edit={() => {
+                editCard={() => {
                   setSelectedEditCard(card.id)
                   setShowEditPaymentModal(true)
+                }}
+                deleteCard={() => {
+                  setSelectedDeleteCard(card.id)
+                  setShowDeletePaymentModal(true)
                 }}
               />
             ))}
@@ -171,14 +184,52 @@ export default function Home() {
         <PaymentMethodForm submitPaymentMethod={addPaymentMethod} setOpen={setShowAddPaymentModal} />
       </Modal>
 
-      <Modal
-        title="Edit payment method"
-        description="We accept debit and credit cards from VISA or Mastercard."
-        open={showEditPaymentModal}
-        setOpen={setShowEditPaymentModal}
-      >
-        <PaymentMethodForm submitPaymentMethod={updatePaymentMethod} setOpen={setShowEditPaymentModal} card={paymentMethods.filter((card) => card.id === selectedEditCard)[0]} />
-      </Modal>
+      {selectedEditCard && (
+        <Modal
+          title="Edit payment method"
+          description="We accept debit and credit cards from VISA or Mastercard."
+          open={showEditPaymentModal}
+          setOpen={setShowEditPaymentModal}
+        >
+          <PaymentMethodForm submitPaymentMethod={updatePaymentMethod} setOpen={setShowEditPaymentModal} card={paymentMethods.filter((card) => card.id === selectedEditCard)[0]} />
+        </Modal>
+      )}
+
+      {selectedDeleteCard && (
+        <Modal
+          title="Are you sure you want to delete this payment method?"
+          description="This action is permanent and cannot be reversed."
+          open={showDeletePaymentModal}
+          setOpen={setShowDeletePaymentModal}
+        >
+          <>
+            <Card card={paymentMethods.filter((card) => card.id === selectedDeleteCard)[0]} />
+
+            <div className="flex flex-col gap-2 sm:flex-row-reverse pt-4 border-t border-gray-200 mt-4">
+              <Button
+                type="button"
+                btnType="delete"
+                className="w-full"
+                onClick={() => {
+                  deletePaymentMethod(selectedDeleteCard!)
+                  setShowDeletePaymentModal(false)
+                  setSelectedDeleteCard(null)
+                }}
+              >
+                Delete card
+              </Button>
+
+              <Button
+                type="button"
+                className="w-full"
+                onClick={() => setShowDeletePaymentModal(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </>
+        </Modal>
+      )}
     </div>
   )
 }
