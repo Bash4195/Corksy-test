@@ -1,7 +1,7 @@
 export interface PaymentMethod {
   id: string
   card: {
-    type: 'Visa' | 'Mastercard' | 'AMEX' | 'Discover' | 'Diners' | 'Diners - Carte Blanche' | 'JCB' | 'Visa Electron' | null
+    type: 'Visa' | 'Mastercard' | null
     number: number
     expirationDate: number
     cvv: number

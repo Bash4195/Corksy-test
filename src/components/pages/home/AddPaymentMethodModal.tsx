@@ -74,7 +74,7 @@ export default function AddPaymentMethodModal({ open, setOpen, addPaymentMethod 
   return (
     <Modal
       title="Add a payment method"
-      description="We accept debit and credit cards from VISA, Mastercard, AMEX and Discover."
+      description="We accept debit and credit cards from VISA or Mastercard."
       open={open}
       setOpen={setOpen}
     >
